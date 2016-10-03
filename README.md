@@ -10,6 +10,7 @@ This plugin enables your Swagger-annotated project to generate **Swagger specs**
 * Use [Handlebars](http://handlebarsjs.com/) as template to customize the static document.
 
 # Versions
+- this fork: it runs on java 1.8, using my fork of swagger. Some of the tests fail, just skip those for now.
 - [3.1.0](https://github.com/kongchen/swagger-maven-plugin/) supports Swagger Spec [2.0](https://github
 .com/swagger-api/swagger-spec/blob/master/versions/2.0.md), support JAX-RS & SpingMVC. (**ACTIVE!**)
 - [3.0.1](https://github.com/kongchen/swagger-maven-plugin/tree/swagger-core_com.wordnik_namespaces/) supports Swagger Spec [2.0](https://github
@@ -22,7 +23,7 @@ Version 3.1.0+ of this plugin depends on the repackaged/rebranded io.swagger.swa
 
 
 # Usage
-Import the plugin in your project by adding following configuration in your `plugins` block: 
+Import the plugin in your project by adding following configuration in your `plugins` block:
 
 ```xml
 <build>
@@ -73,7 +74,7 @@ Import the plugin in your project by adding following configuration in your `plu
 | `typesToSkip` | Nodes of class names to explicitly skip during parameter processing. More details [below](#typesToSkip)|
 | `apiModelPropertyAccessExclusions` | Allows the exclusion of specified `@ApiModelProperty` fields. This can be used to hide certain model properties from the swagger spec. More details [below](#apiModelPropertyAccessExclusions)|
 | `jsonExampleValues` | If `true`, all example values in `@ApiModelProperty` will be handled as json raw values. This is useful for creating valid examples in the generated json for all property types, including non-string ones. |
-| `modelConverters` | List of custom implementations of `io.swagger.converter.ModelConverter` that should be used when generating the swagger files. | 
+| `modelConverters` | List of custom implementations of `io.swagger.converter.ModelConverter` that should be used when generating the swagger files. |
 
 # <a id="templatefile">Template File</a>
 
