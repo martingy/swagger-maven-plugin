@@ -8,14 +8,14 @@ import io.swagger.annotations.Api;
 import io.swagger.config.FilterFactory;
 import io.swagger.core.filter.SpecFilter;
 import io.swagger.core.filter.SwaggerSpecFilter;
+import io.swagger.jaxrs.Reader;
+import io.swagger.jaxrs.config.DefaultReaderConfig;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import javax.ws.rs.Path;
+import java.util.*;
 
 /**
  * @author chekong
@@ -39,7 +39,17 @@ public class MavenDocumentSource extends AbstractDocumentSource {
             }
         }
 
-        swagger = resolveApiReader().read(apiSource.getValidClasses(Api.class));
+        Set<Class<?>> validClasses = apiSource.getValidClasses(Api.class);
+        // If scanAllResources is true, Path annotations should be scanned too
+        if (apiSource.isScanAllResources() && "io.swagger.jaxrs.Reader".equals(apiSource.getSwaggerApiReader())) {
+            validClasses.addAll(apiSource.getValidClasses(Path.class));
+            DefaultReaderConfig rc = new DefaultReaderConfig();
+            rc.setScanAllResources(true);
+            Reader reader = new Reader(swagger, rc);
+            swagger = reader.read(validClasses);
+        } else {
+            swagger = resolveApiReader().read(validClasses);
+        }
 
         if (apiSource.getSecurityDefinitions() != null) {
             for (SecurityDefinition sd : apiSource.getSecurityDefinitions()) {

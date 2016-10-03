@@ -66,7 +66,7 @@ public class ApiSource {
 
     @Parameter
     private String swaggerDirectory;
-    
+
     @Parameter
     private String swaggerFileName;
 
@@ -122,6 +122,12 @@ public class ApiSource {
 
     @Parameter
     private List<String> modelConverters;
+
+    /**
+     * If using io.swagger.jaxrs.Reader as reader, this is passed to that reader.
+     */
+    @Parameter
+    private boolean scanAllResources;
 
     public Set<Class<?>> getValidClasses(Class<? extends Annotation> clazz) {
         Set<Class<?>> classes = new HashSet<Class<?>>();
@@ -266,7 +272,7 @@ public class ApiSource {
     public void setSwaggerDirectory(String swaggerDirectory) {
         this.swaggerDirectory = swaggerDirectory;
     }
-    
+
     public String getSwaggerFileName() {
         return swaggerFileName;
     }
@@ -388,6 +394,14 @@ public class ApiSource {
 
     public void setModelConverters(List<String> modelConverters) {
         this.modelConverters = modelConverters;
+    }
+
+    public boolean isScanAllResources() {
+        return scanAllResources;
+    }
+
+    public void setScanAllResources(boolean scanAllResources) {
+        this.scanAllResources = scanAllResources;
     }
 }
 
